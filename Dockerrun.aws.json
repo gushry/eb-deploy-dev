@@ -1,0 +1,12 @@
+﻿{
+  "AWSEBDockerrunVersion": "1",
+  "Image" : {
+    "Name": "gushry/docker-play2:develop",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "9000"
+    }
+  ]
+}

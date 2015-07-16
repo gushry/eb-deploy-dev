@@ -1,0 +1,37 @@
+machine:
+  timezone:
+    Asia/Tokyo
+  python:
+    version: 2.7.3
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - pip install awscli
+    - docker build gushry/docker-play2:
+    # get branch-name
+    - git rev-parse --abbrev-ref HEAD
+    - export a=`git rev-parse --abbrev-ref HEAD | sed -e 's/\///' | sed -e 's/feature//'`
+    - echo $a
+    - echo $BRANCH
+    - which play
+    - wget --output-document=$HOME/bin/sbt-launch.jar
+      https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/"$SBT_VERSION"/sbt-launch.jar
+    - echo "java $SBT_OPTS -jar \`dirname \$0\`/sbt-launch.jar \"\$@\""
+      > $HOME/bin/sbt
+    - chmod u+x $HOME/bin/sbt
+    - which sbt
+    - sbt sbt-version
+test:
+  override:
+    - chmod u+x ./activator
+    - ./activator clean test
+deployment:
+  hub:
+    branch: [master, develop, /feature/sample.*/]
+    commands:
+    - docker info
+    - docker images
+    - sh deploy.sh
+    - docker images
