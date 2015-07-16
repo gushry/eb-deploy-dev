@@ -15,11 +15,13 @@ aws configure set default.region ap-northeast-1
 aws configure set default.output json
 
 #aws s3 cp $DOCKERRUN_FILE s3://$EB_BUCKET/$DOCKERRUN_FILE
-aws s3 sync . s3://$EB_BUCKET/ --exclude circle.yml
+aws s3 sync . s3://$EB_BUCKET/ --exclude README.md --exclude circle.yml --exclude .git --exclude venv
 aws s3 ls s3://$EB_BUCKET
 
-aws elasticbeanstalk create-application-version --application-name docker-play \
-  --version-label $VERSION S3Bucket=$EB_BUCKET,S3Key=$DOCKERRUN_FILE
+aws elasticbeanstalk create-application-version \
+  --application-name docker-play \
+  --version-label $VERSION \
+  --source-bundle S3Bucket=$EB_BUCKET,S3Key=$DOCKERRUN_FILE
 
 # Update Elastic Beanstalk environment to new version
 aws elasticbeanstalk update-environment --environment-name dev-docker-play2 \
