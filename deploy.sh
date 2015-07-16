@@ -28,7 +28,7 @@ aws s3 ls s3://$EB_BUCKET
 aws elasticbeanstalk create-application-version \
   --application-name docker-play \
   --version-label $VERSION \
-  --source-bundle S3Bucket=$EB_BUCKET,S3Key=$DOCKERRUN_FILE
+  --source-bundle S3Bucket=$EB_BUCKET,S3Key=$ZIPFILE
 
 # Update Elastic Beanstalk environment to new version
 aws elasticbeanstalk update-environment --environment-name dev-docker-play2 \
