@@ -9,9 +9,6 @@ EB_BUCKET=gushry-docker-play2-dev
 DOCKERRUN_FILE=Dockerrun.aws.json
 
 ZIPFILE=deploy.zip
-if [ -f $ZIPFILE ]; then
-  rm $ZIPFILE
-fi
 zip $ZIPFILE $DOCKERRUN_FILE .ebextensions
 
 aws --version
@@ -31,9 +28,7 @@ aws elasticbeanstalk create-application-version \
   --source-bundle S3Bucket=$EB_BUCKET,S3Key=$ZIPFILE
 
 # Update Elastic Beanstalk environment to new version
-aws elasticbeanstalk update-environment --environment-name dev-docker-play2 \
+aws elasticbeanstalk update-environment \
+  --environment-name dev-docker-play2 \
   --version-label $VERSION
 
-if [ -f $ZIPFILE ]; then
-  rm $ZIPFILE
-fi
