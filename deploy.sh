@@ -7,6 +7,13 @@ VERSION="develop-"`date '+%Y%m%d-%H%M'`
 # Create new Elastic Beanstalk version
 EB_BUCKET=gushry-docker-play2-dev
 DOCKERRUN_FILE=./Dockerrun.aws.json
+
+aws --version
+aws configure set aws_access_key_id $AWSKEY
+aws configure set aws_secret_access_key $AWSSECRETKEY
+aws configure set default.region ap-northeast-1
+aws configure set default.output json
+
 aws s3 cp $DOCKERRUN_FILE s3://$EB_BUCKET/$DOCKERRUN_FILE
 aws elasticbeanstalk create-application-version --application-name docker-play \
   --version-label $VERSION S3Bucket=$EB_BUCKET,S3Key=$DOCKERRUN_FILE

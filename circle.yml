@@ -6,9 +6,9 @@ machine:
   services:
     - docker
 
-#dependencies:
-#  pre:
-#    - pip install awscli
+dependencies:
+  pre:
+    - pip install awscli
 #    - docker pull gushry/docker-play2:develop
 
 #test:
