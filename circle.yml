@@ -14,7 +14,7 @@ dependencies:
 test:
   post:
     - docker run -d -p 9000:9000 -e "LANG=ja_JP.utf-8" gushry/docker-play2:develop; sleep 10
-    - curl --retry 10 --retry-delay 5 -v http://localhost:9000
+#    - curl --retry 10 --retry-delay 5 -v http://localhost:9000
 
 deployment:
   elasticbeanstalk:
